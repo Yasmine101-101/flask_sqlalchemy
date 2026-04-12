@@ -12,10 +12,29 @@ class Exercise(db.Model):
     category = db.Column(db.String, nullable=False)
     equipment_needed = db.Column(db.Boolean, nullable=False)
 
-   
     workout_exercises = db.relationship('WorkoutExercise', back_populates='exercise', cascade='all, delete-orphan')
-    
     workouts = db.relationship('Workout', secondary='workout_exercises', back_populates='exercises')
+
+    
+    __table_args__ = (
+        db.CheckConstraint("name != ''", name='exercise_name_not_empty'),
+        db.CheckConstraint("category != ''", name='exercise_category_not_empty'),
+    )
+
+    
+    @validates('name')
+    def validate_name(self, key, value):
+        if not value or len(value.strip()) == 0:
+            raise ValueError("Exercise name cannot be empty")
+        return value
+
+    
+    @validates('category')
+    def validate_category(self, key, value):
+        allowed = ['strength', 'cardio', 'flexibility']
+        if value not in allowed:
+            raise ValueError(f"Category must be one of: {allowed}")
+        return value
 
 
 class Workout(db.Model):
@@ -26,10 +45,20 @@ class Workout(db.Model):
     duration_minutes = db.Column(db.Integer, nullable=False)
     notes = db.Column(db.Text, nullable=True)
 
-    
     workout_exercises = db.relationship('WorkoutExercise', back_populates='workout', cascade='all, delete-orphan')
-
     exercises = db.relationship('Exercise', secondary='workout_exercises', back_populates='workouts')
+
+    
+    __table_args__ = (
+        db.CheckConstraint('duration_minutes > 0', name='duration_must_be_positive'),
+    )
+
+    
+    @validates('duration_minutes')
+    def validate_duration(self, key, value):
+        if value <= 0:
+            raise ValueError("Duration must be greater than 0")
+        return value
 
 
 class WorkoutExercise(db.Model):
@@ -43,5 +72,16 @@ class WorkoutExercise(db.Model):
     duration_seconds = db.Column(db.Integer, nullable=True)
 
     workout = db.relationship('Workout', back_populates='workout_exercises')
-    
     exercise = db.relationship('Exercise', back_populates='workout_exercises')
+
+    
+    __table_args__ = (
+        db.CheckConstraint('sets > 0', name='sets_must_be_positive'),
+    )
+
+    
+    @validates('sets')
+    def validate_sets(self, key, value):
+        if value is not None and value <= 0:
+            raise ValueError("Sets must be greater than 0")
+        return value
