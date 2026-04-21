@@ -9,8 +9,7 @@ This is a backend API for a workout tracking app. I built it using Flask and SQL
 
 1. Clone the repo:git@github.com:Yasmine101-101/flask_sqlalchemy.git
 ```bash
-git clone <your-repo-url>
-cd workout-app
+
 ```
 
 2. Install dependencies:
