@@ -1,67 +1,102 @@
-# flask_sqlalchemy
-# Workout App Backend
+Workout App Backend
 
-## Description
+A backend REST API for a workout-tracking application built with Python, Flask, and SQLAlchemy.
 
-This is a backend API for a workout tracking app. I built it using Flask and SQLAlchemy. It lets personal trainers create workouts, add exercises, and link exercises to specific workouts.
+The API allows personal trainers to create and manage workouts, add exercises, and associate exercises with specific workouts.
 
-## Installation
+Technologies
 
-1. Clone the repo:git@github.com:Yasmine101-101/flask_sqlalchemy.git
-```bash
+* Python
+* Flask
+* SQLAlchemy
+* Flask-Migrate
+* Pipenv
 
-```
+Features
 
-2. Install dependencies:
-```bash
+* Create and retrieve workouts
+* Delete workouts
+* Create and retrieve exercises
+* Delete exercises
+* Associate exercises with specific workouts
+* Relational database management
+* Database migrations and seeding
+
+Installation
+
+1. Clone the repository
+
+git clone git@github.com:Yasmine101-101/workout-tracker-api.git
+cd workout-tracker-api
+
+2. Install dependencies
+
 pipenv install
 pipenv shell
-```
 
-3. Go into the server folder:
-```bash
+3. Navigate to the server directory
+
 cd server
-```
 
-4. Set up the database:
-```bash
+4. Set up the database
+
+Initialize the database migration:
+
 flask db init
+
+Create the initial migration:
+
 flask db migrate -m "initial migration"
+
+Apply the migration:
+
 flask db upgrade head
-```
 
-5. Seed the database:
-```bash
+5. Seed the database
+
 python seed.py
-```
 
-## How to Run
+Running the Application
 
-```bash
+Start the Flask application:
+
 python app.py
-```
 
-App runs on `http://127.0.0.1:5555`
+The API will be available at:
 
-## Endpoints
+http://127.0.0.1:5555
 
-### Workouts
-| Method | Endpoint | What it does |
-|--------|----------|-------------|
-| GET | /workouts | get all workouts |
-| GET | /workouts/\<id\> | get one workout |
-| POST | /workouts | create a workout |
-| DELETE | /workouts/\<id\> | delete a workout |
+API Endpoints
 
-### Exercises
-| Method | Endpoint | What it does |
-|--------|----------|-------------|
-| GET | /exercises | get all exercises |
-| GET | /exercises/\<id\> | get one exercise |
-| POST | /exercises | create an exercise |
-| DELETE | /exercises/\<id\> | delete an exercise |
+Workouts
 
-### Workout Exercises
-| Method | Endpoint | What it does |
-|--------|----------|-------------|
-| POST | /workouts/\<workout_id\>/exercises/\<exercise_id\>/workout_exercises | add an exercise to a workout |
+Method	Endpoint	Description
+GET	/workouts	Get all workouts
+GET	/workouts/<id>	Get a specific workout
+POST	/workouts	Create a workout
+DELETE	/workouts/<id>	Delete a workout
+
+Exercises
+
+Method	Endpoint	Description
+GET	/exercises	Get all exercises
+GET	/exercises/<id>	Get a specific exercise
+POST	/exercises	Create an exercise
+DELETE	/exercises/<id>	Delete an exercise
+
+Workout Exercises
+
+Method	Endpoint	Description
+POST	/workouts/<workout_id>/exercises/<exercise_id>/workout_exercises	Add an exercise to a workout
+
+Project Overview
+
+This project demonstrates practical experience with:
+
+* REST API development
+* Flask application development
+* SQLAlchemy and relational databases
+* CRUD operations
+* Database migrations
+* Database seeding
+* API endpoint design
